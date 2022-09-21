@@ -407,47 +407,47 @@ public class IntrinsicModelTest {
 
     @Test
     public void testParseShortMilliErr() {
-        assertIntervalError("2016-03-21T10:31:61.23");
+        assertIntervalError("'2016-03-21T10:31:61.23'");
     }
 
     @Test
     public void testParseShortMinErr() {
-        assertIntervalError("2016-03-21T10:3");
+        assertIntervalError("'2016-03-21T10:3'");
     }
 
     @Test
     public void testParseShortMinErr2() {
-        assertIntervalError("2016-03-21T10:69");
+        assertIntervalError("'2016-03-21T10:69'");
     }
 
     @Test
     public void testParseShortMonthErr() {
-        assertIntervalError("2016-1");
+        assertIntervalError("'2016-1'");
     }
 
     @Test
     public void testParseShortMonthErr2() {
-        assertIntervalError("2016x11");
+        assertIntervalError("'2016x11'");
     }
 
     @Test
     public void testParseShortMonthRange() {
-        assertIntervalError("2016-66");
+        assertIntervalError("'2016-66'");
     }
 
     @Test
     public void testParseShortSecErr() {
-        assertIntervalError("2016-03-21T10:31:61");
+        assertIntervalError("'2016-03-21T10:31:61'");
     }
 
     @Test
     public void testParseShortSecErr1() {
-        assertIntervalError("2016-03-21T10:31:1");
+        assertIntervalError("'2016-03-21T10:31:1'");
     }
 
     @Test
     public void testParseShortYearErr() {
-        assertIntervalError("201");
+        assertIntervalError("'201'");
     }
 
     private static void assertShortInterval(String expected, String interval) throws SqlException {
@@ -480,7 +480,7 @@ public class IntrinsicModelTest {
 
     private void assertIntervalError(String interval) {
         try {
-            IntervalUtils.parseIntervalEx(interval, 0, interval.length(), 0, out, IntervalOperation.INTERSECT);
+            IntervalUtils.parseIntervalEx(interval, 1, interval.length() - 1, 0, out, IntervalOperation.INTERSECT);
             IntervalUtils.applyLastEncodedIntervalEx(out);
             Assert.fail();
         } catch (SqlException ignore) {
