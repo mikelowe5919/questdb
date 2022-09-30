@@ -68,6 +68,7 @@ public class ReaderPool extends AbstractPool implements ResourcePool<TableReader
     @Override
     public TableReader get(CharSequence name) {
 
+        name = name.toString().toLowerCase();
         Entry e = getEntry(name);
 
         long lockOwner = e.lockOwner;
