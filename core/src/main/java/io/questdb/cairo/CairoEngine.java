@@ -377,6 +377,7 @@ public class CairoEngine implements Closeable, WriterSource, WalWriterSource {
             CharSequence tableName,
             CharSequence lockReason
     ) {
+        tableName = tableName.toString().toLowerCase();
         assert null != lockReason;
         securityContext.checkWritePermission();
 
@@ -426,6 +427,7 @@ public class CairoEngine implements Closeable, WriterSource, WalWriterSource {
             Path path,
             CharSequence tableName
     ) {
+        tableName = tableName.toString().toLowerCase();
         securityContext.checkWritePermission();
         checkTableName(tableName);
         CharSequence lockedReason = lock(securityContext, tableName, "removeTable");
@@ -482,6 +484,7 @@ public class CairoEngine implements Closeable, WriterSource, WalWriterSource {
             @Nullable TableWriter writer,
             boolean newTable
     ) {
+        tableName = tableName.toString().toLowerCase();
         checkTableName(tableName);
         readerPool.unlock(tableName);
         writerPool.unlock(tableName, writer, newTable);
