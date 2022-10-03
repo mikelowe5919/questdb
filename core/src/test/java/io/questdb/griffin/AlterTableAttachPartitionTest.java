@@ -1010,7 +1010,7 @@ public class AlterTableAttachPartitionTest extends AbstractGriffinTest {
         FilesFacadeImpl ff = new FilesFacadeImpl() {
             @Override
             public long openRW(LPSZ name, long opts) {
-                if (Chars.contains(name, "dst" + testName.getMethodName()) && Chars.contains(name, "2020-01-01") && counter.decrementAndGet() == 0) {
+                if (Chars.contains(name, "dst" + testName.getMethodName().toLowerCase()) && Chars.contains(name, "2020-01-01") && counter.decrementAndGet() == 0) {
                     return -1;
                 }
                 return super.openRW(name, opts);

@@ -49,7 +49,7 @@ public class LineTcpConnectionContextTest extends BaseLineTcpContextTest {
 
     @Test
     public void testAddCastFieldColumnNoTable() throws Exception {
-        String tableName = "addcastcolumn";
+        String tableName = "addCastColumn";
         symbolAsFieldSupported = true;
         runInContext(() -> {
             recvBuffer = tableName + ",location=us-midwest temperature=82 1465839830100400200\n" +
