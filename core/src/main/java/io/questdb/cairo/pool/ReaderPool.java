@@ -157,6 +157,7 @@ public class ReaderPool extends AbstractPool implements ResourcePool<TableReader
     }
 
     public boolean lock(CharSequence name) {
+        name = name.toString().toLowerCase();
         Entry e = getEntry(name);
         final long thread = Thread.currentThread().getId();
         if (Unsafe.cas(e, LOCK_OWNER, UNLOCKED, thread) || Unsafe.cas(e, LOCK_OWNER, thread, thread)) {
@@ -196,6 +197,7 @@ public class ReaderPool extends AbstractPool implements ResourcePool<TableReader
     }
 
     public void unlock(CharSequence name) {
+        name = name.toString().toLowerCase();
         Entry e = entries.get(name);
         long thread = Thread.currentThread().getId();
         if (e == null) {

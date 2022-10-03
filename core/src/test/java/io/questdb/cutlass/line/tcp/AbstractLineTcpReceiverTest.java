@@ -243,8 +243,8 @@ public class AbstractLineTcpReceiverTest extends AbstractCairoTest {
         switch (wait) {
             case WAIT_ENGINE_TABLE_RELEASE:
                 engine.setPoolListener((factoryType, thread, name, event, segment, position) -> {
-                    if (Chars.equals(tableName, name)) {
-                        if (factoryType == PoolListener.SRC_WRITER && event == PoolListener.EV_RETURN && Chars.equals(tableName, t)) {
+                    if (Chars.equalsIgnoreCase(tableName, name)) {
+                        if (factoryType == PoolListener.SRC_WRITER && event == PoolListener.EV_RETURN && Chars.equalsIgnoreCase(tableName, t)) {
                             releaseLatch.countDown();
                         }
                     }

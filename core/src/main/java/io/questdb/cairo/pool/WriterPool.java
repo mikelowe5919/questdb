@@ -447,6 +447,7 @@ public class WriterPool extends AbstractPool {
             CharSequence lockReason,
             @Nullable AsyncWriterCommand asyncWriterCommand
     ) {
+        tableName = tableName.toString().toLowerCase();
         assert null != lockReason;
         checkClosed();
 
