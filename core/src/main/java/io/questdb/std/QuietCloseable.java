@@ -22,21 +22,12 @@
  *
  ******************************************************************************/
 
-package io.questdb.cairo;
+package io.questdb.std;
 
-import io.questdb.std.ThreadLocal;
+import java.io.Closeable;
 
-/**
- * Thrown when data conversion fails in cairo (e.g. for Long256).
- */
-public class ConversionException extends CairoException {
-    private static final ThreadLocal<ConversionException> tlException = new ThreadLocal<>(ConversionException::new);
+public interface QuietCloseable extends Closeable {
 
-    public static ConversionException instance(CharSequence reason) {
-        ConversionException ex = tlException.get();
-        ex.message.clear();
-        ex.errno = 0;
-        ex.put(reason);
-        return ex;
-    }
+    @Override
+    void close();
 }
