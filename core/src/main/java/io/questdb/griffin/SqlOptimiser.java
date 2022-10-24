@@ -334,6 +334,17 @@ class SqlOptimiser {
                 if (modelIndex < 0) {
                     // alias cannot be resolved, we will trust that the calling side will handle this
                     // in this context we do not have model that is able to resolve table alias
+                    // check nested model for modelAliasIndex...
+                    if (model.getNestedModel() != null) {
+                        int nestedModelIndex = model.getNestedModel().getModelAliasIndex(node.token, 0, dotIndex);
+                        if (nestedModelIndex >= 0) {
+                            addTopDownColumn0(
+                                    node,
+                                    model.getJoinModels().getQuick(nestedModelIndex),
+                                    node.token.subSequence(dotIndex + 1, node.token.length())
+                            );
+                        }
+                    }
                     return;
                 }
 

@@ -86,10 +86,24 @@ public class FunctionParser implements PostOrderTreeTraversalAlgo.Visitor, Mutab
             CharSequence name,
             RecordMetadata metadata
     ) throws SqlException {
-        final int index = metadata.getColumnIndexQuiet(name);
+        int index = metadata.getColumnIndexQuiet(name);
 
         if (index == -1) {
-            throw SqlException.invalidColumn(position, name);
+            // if index is -1, it could be that the name contains a '.', we can check name in keys without dotIndex now
+            int dotIndex = Chars.indexOf(name, '.');
+            if (dotIndex != -1) {
+                CharSequence nameToCheck = name.subSequence(dotIndex + 1, name.length());
+                int reIndex = metadata.getColumnIndexQuiet(nameToCheck);
+                if (reIndex != -1) {
+                    index = reIndex;
+                } else {
+                    throw SqlException.invalidColumn(position, name);
+                }
+            }
+            // check if index is still -1
+            if (index == -1) {
+                throw SqlException.invalidColumn(position, name);
+            }
         }
 
         int columnType = metadata.getColumnType(index);
